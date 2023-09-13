@@ -17,6 +17,7 @@ namespace WebApp.PollyTest.Pages
 
         public async void OnGet()
         {
+            // Polly 재시도 및 SSL 무시 동시 처리
             //var retryPolicy = HttpPolicyExtensions
             //                    .HandleTransientHttpError()
             //                    .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
