@@ -17,11 +17,46 @@ namespace WebApp.PollyTest.Pages
 
         public async void OnGet()
         {
+            //var retryPolicy = HttpPolicyExtensions
+            //                    .HandleTransientHttpError()
+            //                    .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+
+            //var sslOptions = new SslClientAuthenticationOptions
+            //{
+            //    RemoteCertificateValidationCallback = delegate { return true; },
+            //};
+
+            //var socketHandler = new SocketsHttpHandler { PooledConnectionLifetime = TimeSpan.FromMinutes(15), SslOptions = sslOptions };
+            //var pollyHandler = new PolicyHttpMessageHandler(retryPolicy)
+            //{
+            //    InnerHandler = socketHandler,
+            //};
+            //var httpClient = new HttpClient(socketHandler);
+
+            // ▼▼ SSL 무시 ▼▼
+
+            // ● SocketsHttpHandler
+            //var sslOptions = new SslClientAuthenticationOptions
+            //{
+            //    RemoteCertificateValidationCallback = delegate { return true; },
+            //};
+            //var handler = new SocketsHttpHandler { PooledConnectionLifetime = TimeSpan.FromMinutes(15), SslOptions = sslOptions };
+
+            // ● HttpClientHandler
+            //var handler = new HttpClientHandler();
+            //handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+            //handler.ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, cetChain, policyErrors) => true;
+
+            //var httpClient = new HttpClient(handler);
+            //httpClient.BaseAddress = new Uri("https://localhost:7018/WeatherForecast/");
+
+            // ▲▲ SSL 무시 ▲▲
+
             // 선언된 Client 가져오기
-            var client = factory.CreateClient("apiClient");
+            var httpClient = factory.CreateClient("apiClient");
 
             // API 호출
-            var result = await client.GetAsync("GetWeatherForecastData");
+            var result = await httpClient.GetAsync("GetWeatherForecastData");
 
             if (result.IsSuccessStatusCode)
             {
